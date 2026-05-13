@@ -14,7 +14,7 @@ func main() {
 
 	// Initialize the database connection
 	if err := config.InitDB(); err != nil {
-		logger.Errorf("Database initialization failed: %v", err)
+		logger.Errorf("Config initialization error: %v", err)
 		return
 	}
 

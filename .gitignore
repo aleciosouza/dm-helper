@@ -1,1 +1,16 @@
 .vscode 
+
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+
+# Coverage
+*.out
+
+# DB Folder
+db/
