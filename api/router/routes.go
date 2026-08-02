@@ -13,5 +13,6 @@ func InitRoutes(router *gin.Engine) {
 	auth := v1.Group("auth")
 	{
 		auth.POST("/register", handler.RegisterHandler)
+		auth.POST("/login", handler.LoginHandler)
 	}
 }
