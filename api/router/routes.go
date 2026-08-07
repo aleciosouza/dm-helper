@@ -15,4 +15,9 @@ func InitRoutes(router *gin.Engine) {
 		auth.POST("/register", handler.RegisterHandler)
 		auth.POST("/login", handler.LoginHandler)
 	}
+
+	sheet := v1.Group("sheet", AuthMiddleware())
+	{
+		sheet.POST("/create", handler.CreateSheetHandler)
+	}
 }

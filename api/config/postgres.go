@@ -69,5 +69,8 @@ func InitPostgres() (*gorm.DB, error) {
 func AutoMigrate(db *gorm.DB) error {
 	return db.AutoMigrate(
 		&schemas.User{},
+		&schemas.Sheet{},
+		&schemas.SheetSkill{},
+		&schemas.SheetAttack{},
 	)
 }
