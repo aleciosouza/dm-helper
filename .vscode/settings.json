@@ -1,5 +1,23 @@
 {
-  "github.copilot.enable": {
-    "*": false
-  }
+    "github.copilot.enable": {
+        "*": false
+    },
+
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+
+    // O ESLint só roda dentro de web/ (o api/ é Go)
+    "eslint.workingDirectories": [{ "directory": "web", "changeProcessCWD": true }],
+    "prettier.configPath": "web/.prettierrc.json",
+
+    // Usa o TypeScript do projeto, não o embutido no VS Code
+    "typescript.tsdk": "web/node_modules/typescript/lib",
+    "[go]": {
+        "editor.defaultFormatter": "golang.go"
+    }
 }
