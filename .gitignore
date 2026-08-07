@@ -1,2 +1,58 @@
+# Sistema operacional
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+._*
+Thumbs.db
+desktop.ini
+
+
+# Editores
+.idea/
+*.swp
+*.swo
+*~
+
+# Env
 .env
-*.sum
+.env.local
+.env.*.local
+!.env.example
+
+# Go
+api/api
+api/dm-helper
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+
+*.test
+*.prof
+
+
+*.out
+
+
+__debug_bin*
+
+
+go.work
+go.work.sum
+
+# Node
+node_modules/
+dist/
+coverage/
+.vite/
+*.tsbuildinfo
+.eslintcache
+
+# Package managers
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
