@@ -18,6 +18,8 @@ func InitRoutes(router *gin.Engine) {
 
 	sheet := v1.Group("sheet", AuthMiddleware())
 	{
+		sheet.GET("", handler.GetSheetsByUserHandler)
+		sheet.GET("/:id", handler.GetSheetHandler)
 		sheet.POST("", handler.CreateSheetHandler)
 		sheet.PATCH("/:id", handler.UpdateSheetHandler)
 	}

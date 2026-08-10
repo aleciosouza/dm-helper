@@ -14,6 +14,52 @@ import (
 	"gorm.io/gorm"
 )
 
+func GetSheetHandler(ctx *gin.Context) {
+	userID := ctx.GetUint(config.ContextUserID)
+	sheetID, err := strconv.Atoi(ctx.Param("id"))
+
+	if err != nil {
+		sendError(ctx, http.StatusBadRequest, errParamIsRequired("sheetID", "uint").Error())
+		return
+	}
+
+	sheet := schemas.Sheet{}
+	err = db.Where("id = ? AND user_id = ?", sheetID, userID).Preload("Skills").Preload("Attacks").First(&sheet).Error
+
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			sendError(ctx, http.StatusNotFound, "sheet not found")
+			return
+		}
+
+		logger.Errorf("error loading sheet %d: %v", sheetID, err)
+		sendError(ctx, http.StatusInternalServerError, "failed to get sheet: [SH-01]")
+		return
+	}
+
+	sendSuccess(ctx, "get_sheet", sheet.ToResponse())
+}
+
+func GetSheetsByUserHandler(ctx *gin.Context) {
+	userID := ctx.GetUint(config.ContextUserID)
+
+	sheets := []schemas.Sheet{}
+	err := db.Where("user_id = ?", userID).Preload("Skills").Preload("Attacks").Find(&sheets).Error
+
+	if err != nil {
+		logger.Errorf("error loading sheets for user %d: %v", userID, err)
+		sendError(ctx, http.StatusInternalServerError, "failed to get sheets: [SH-02]")
+		return
+	}
+
+	responses := make([]schemas.SheetResponse, len(sheets))
+	for i, sheet := range sheets {
+		responses[i] = sheet.ToResponse()
+	}
+
+	sendSuccess(ctx, "get_sheets", responses)
+}
+
 func sheetFromRequest(userId uint, req d7d.Sheet) schemas.Sheet {
 	skills := make([]schemas.SheetSkill, len(req.Skills))
 	for i, skill := range req.Skills {
@@ -177,7 +223,7 @@ func UpdateSheetHandler(ctx *gin.Context) {
 		}
 
 		logger.Errorf("error loading sheet %d: %v", sheetID, err)
-		sendError(ctx, http.StatusInternalServerError, "failed to update sheet: [SH-02]")
+		sendError(ctx, http.StatusInternalServerError, "failed to update sheet: [SH-01]")
 		return
 	}
 
