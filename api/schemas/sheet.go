@@ -12,7 +12,7 @@ type SheetSkill struct {
 
 type SheetAttack struct {
 	SheetID          uint     `gorm:"primaryKey"`
-	Name             string   `gorm:"not null"`
+	Name             string   `gorm:"primaryKey"`
 	AttackDice       d7d.Dice `gorm:"not null"`
 	AttackDiceAmount uint8    `gorm:"not null"`
 	DamageType       string   `gorm:"not null"`
