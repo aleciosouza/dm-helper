@@ -1,8 +1,9 @@
 package schemas
 
 import (
+	"time"
+
 	"github.com/aleciosouza/dm-helper/domain/d7d"
-	"gorm.io/gorm"
 )
 
 type SheetSkill struct {
@@ -19,7 +20,9 @@ type SheetAttack struct {
 }
 
 type Sheet struct {
-	gorm.Model
+	ID        uint `gorm:"primarykey"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
 
 	UserID            uint   `gorm:"not null;index"`
 	Name              string `gorm:"not null"`

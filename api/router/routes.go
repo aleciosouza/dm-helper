@@ -26,5 +26,6 @@ func InitRoutes(router *gin.Engine) {
 		sheetGroup.GET("/:id", sheet.GetSheetHandler)
 		sheetGroup.POST("", sheet.CreateSheetHandler)
 		sheetGroup.PATCH("/:id", sheet.UpdateSheetHandler)
+		sheetGroup.DELETE("/:id", sheet.DeleteSheetHandler)
 	}
 }
