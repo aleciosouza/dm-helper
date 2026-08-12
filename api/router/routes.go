@@ -1,6 +1,8 @@
 package router
 
 import (
+	"github.com/aleciosouza/dm-helper/domain/auth"
+	"github.com/aleciosouza/dm-helper/domain/sheet"
 	"github.com/aleciosouza/dm-helper/handler"
 	"github.com/gin-gonic/gin"
 )
@@ -10,17 +12,19 @@ func InitRoutes(router *gin.Engine) {
 
 	v1 := router.Group("api/v1")
 
-	auth := v1.Group("auth")
+	auth.InitModule()
+	authGroup := v1.Group("auth")
 	{
-		auth.POST("/register", handler.RegisterHandler)
-		auth.POST("/login", handler.LoginHandler)
+		authGroup.POST("/register", auth.RegisterHandler)
+		authGroup.POST("/login", auth.LoginHandler)
 	}
 
-	sheet := v1.Group("sheet", AuthMiddleware())
+	sheet.InitModule()
+	sheetGroup := v1.Group("sheet", AuthMiddleware())
 	{
-		sheet.GET("", handler.GetSheetsByUserHandler)
-		sheet.GET("/:id", handler.GetSheetHandler)
-		sheet.POST("", handler.CreateSheetHandler)
-		sheet.PATCH("/:id", handler.UpdateSheetHandler)
+		sheetGroup.GET("", sheet.GetSheetsByUserHandler)
+		sheetGroup.GET("/:id", sheet.GetSheetHandler)
+		sheetGroup.POST("", sheet.CreateSheetHandler)
+		sheetGroup.PATCH("/:id", sheet.UpdateSheetHandler)
 	}
 }

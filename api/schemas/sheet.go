@@ -1,7 +1,7 @@
 package schemas
 
 import (
-	"github.com/aleciosouza/dm-helper/d7d"
+	"github.com/aleciosouza/dm-helper/domain/d7d"
 	"gorm.io/gorm"
 )
 

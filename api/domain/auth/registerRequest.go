@@ -1,4 +1,4 @@
-package handler
+package auth
 
 import (
 	"errors"
@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/aleciosouza/dm-helper/config"
+	"github.com/aleciosouza/dm-helper/handler"
 	"github.com/aleciosouza/dm-helper/schemas"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
@@ -23,7 +24,7 @@ func (r *RegisterRequest) Validate() error {
 	r.Name = strings.TrimSpace(r.Name)
 
 	if r.Email == "" {
-		return errParamIsRequired("email", "string")
+		return handler.ErrParamIsRequired("email", "string")
 	}
 
 	if !strings.Contains(r.Email, "@") {
@@ -35,7 +36,7 @@ func (r *RegisterRequest) Validate() error {
 	}
 
 	if r.Name == "" {
-		return errParamIsRequired("name", "string")
+		return handler.ErrParamIsRequired("name", "string")
 	}
 
 	return nil
@@ -45,32 +46,32 @@ func RegisterHandler(ctx *gin.Context) {
 	req := RegisterRequest{}
 
 	if err := ctx.BindJSON(&req); err != nil {
-		sendError(ctx, http.StatusBadRequest, "invalid request body")
+		handler.SendError(ctx, http.StatusBadRequest, "invalid request body")
 		return
 	}
 
 	if err := req.Validate(); err != nil {
-		sendError(ctx, http.StatusBadRequest, err.Error())
+		handler.SendError(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	existing := schemas.User{}
 	err := db.Where("email = ?", req.Email).First(&existing).Error
 	if err == nil {
-		sendError(ctx, http.StatusConflict, "email already registered")
+		handler.SendError(ctx, http.StatusConflict, "email already registered")
 		return
 	}
 
 	if !errors.Is(err, gorm.ErrRecordNotFound) {
 		logger.Errorf("Error to check if email is available: %v", err)
-		sendError(ctx, http.StatusInternalServerError, "failed to register: [RG-01]")
+		handler.SendError(ctx, http.StatusInternalServerError, "failed to register: [RG-01]")
 		return
 	}
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		logger.Errorf("Error hashing password: %v", err)
-		sendError(ctx, http.StatusInternalServerError, "failed to register: [RG-02]")
+		handler.SendError(ctx, http.StatusInternalServerError, "failed to register: [RG-02]")
 		return
 	}
 
@@ -82,7 +83,7 @@ func RegisterHandler(ctx *gin.Context) {
 
 	if err := db.Create(&user).Error; err != nil {
 		logger.Errorf("Error creating user: %v", err)
-		sendError(ctx, http.StatusInternalServerError, "failed to register: [RG-03]")
+		handler.SendError(ctx, http.StatusInternalServerError, "failed to register: [RG-03]")
 		return
 	}
 
@@ -90,11 +91,11 @@ func RegisterHandler(ctx *gin.Context) {
 
 	if err != nil {
 		logger.Errorf("Error generating token: %v", err)
-		sendError(ctx, http.StatusInternalServerError, "failed to register: [RG-04]")
+		handler.SendError(ctx, http.StatusInternalServerError, "failed to register: [RG-04]")
 		return
 	}
 
-	sendSuccess(ctx, "auth:register", gin.H{
+	handler.SendSuccess(ctx, "auth:register", gin.H{
 		"token": token,
 		"user":  user.ToResponse(),
 	})
