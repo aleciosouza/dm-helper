@@ -2,29 +2,20 @@ package router
 
 import (
 	"net/http"
-	"strings"
 
 	"github.com/aleciosouza/dm-helper/config"
+	"github.com/aleciosouza/dm-helper/domain/auth"
 	"github.com/gin-gonic/gin"
 )
 
-const BEARER_PREFIX = "bearer "
-
 func AuthMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		header := ctx.GetHeader("Authorization")
+		token, bearerError := auth.GetBearer(ctx)
 
-		if header == "" {
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "missing authorization header"})
+		if bearerError != nil {
+			ctx.AbortWithStatusJSON(bearerError.Status, gin.H{"error": bearerError.Error()})
 			return
 		}
-
-		if len(header) < len(BEARER_PREFIX) || !strings.EqualFold(header[:len(BEARER_PREFIX)], BEARER_PREFIX) {
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "invalid authorization header"})
-			return
-		}
-
-		token := strings.TrimSpace(header[len(BEARER_PREFIX):])
 
 		claims, err := config.ValidateJWT(token)
 

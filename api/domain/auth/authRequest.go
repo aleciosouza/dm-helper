@@ -2,29 +2,19 @@ package auth
 
 import (
 	"net/http"
-	"strings"
 
 	"github.com/aleciosouza/dm-helper/config"
 	"github.com/aleciosouza/dm-helper/handler"
 	"github.com/gin-gonic/gin"
 )
 
-const BEARER_PREFIX = "bearer "
-
 func AuthHandler(ctx *gin.Context) {
-	header := ctx.GetHeader("Authorization")
+	token, bearerError := GetBearer(ctx)
 
-	if header == "" {
-		handler.SendError(ctx, http.StatusUnauthorized, "missing authorization header")
+	if bearerError != nil {
+		handler.SendError(ctx, bearerError.Status, bearerError.Error())
 		return
 	}
-
-	if len(header) < len(BEARER_PREFIX) || !strings.EqualFold(header[:len(BEARER_PREFIX)], BEARER_PREFIX) {
-		handler.SendError(ctx, http.StatusNotAcceptable, "invalid authorization header")
-		return
-	}
-
-	token := strings.TrimSpace(header[len(BEARER_PREFIX):])
 
 	claims, err := config.ValidateJWT(token)
 
