@@ -16,6 +16,7 @@ func InitRoutes(router *gin.Engine) {
 	authGroup := v1.Group("auth")
 	{
 		authGroup.HEAD("", auth.AuthHandler)
+		authGroup.GET("", AuthMiddleware(), auth.GetMeHandler)
 		authGroup.POST("/register", auth.RegisterHandler)
 		authGroup.POST("/login", auth.LoginHandler)
 	}
