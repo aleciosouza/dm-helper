@@ -6,4 +6,13 @@ export default defineConfig({
     resolve: {
         tsconfigPaths: true,
     },
+    server: {
+        proxy: {
+            "/api": {
+                // @TODO: Replace before deploying to production
+                target: "http://localhost:8080",
+                changeOrigin: true
+            }
+        }
+    }
 });

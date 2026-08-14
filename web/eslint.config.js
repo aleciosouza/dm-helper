@@ -67,6 +67,9 @@ export default defineConfig(
             "@typescript-eslint/consistent-type-imports": "error",
             "@typescript-eslint/no-import-type-side-effects": "error",
 
+            // Allows `throw new Response(...)`, `throw redirect(...)` and `throw data(...)` from React Router
+            "@typescript-eslint/only-throw-error": ["error", { allow: [{ from: "lib", name: "Response" }] }],
+
             // Permite `_arg` e `catch (_err)`
             "@typescript-eslint/no-unused-vars": [
                 "error",

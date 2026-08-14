@@ -4,6 +4,11 @@ import type { Route } from "./+types/root";
 
 import "./app.css";
 
+import { useState } from "react";
+import { QueryClientProvider } from "@tanstack/react-query";
+
+import { getQueryClient } from "./domain/api/queryClient";
+
 export function Layout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
@@ -23,7 +28,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-    return <Outlet />;
+    const [queryClient] = useState(getQueryClient);
+
+    return (
+        <QueryClientProvider client={queryClient}>
+            <Outlet />
+        </QueryClientProvider>
+    );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
