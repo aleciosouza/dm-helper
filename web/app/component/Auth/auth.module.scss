@@ -70,3 +70,24 @@
     color: theme-color("danger");
     font-size: font-size("sm");
 }
+
+.anchor {
+    background: none;
+    border: none;
+    padding: 0;
+    color: theme-color("accent");
+    font-size: font-size("sm");
+    cursor: pointer;
+
+    > span b {
+        text-decoration: underline;
+    }
+
+    &:hover {
+        color: theme-color("accent-hover");
+    }
+
+    &:active {
+        color: theme-color("accent-active");
+    }
+}
