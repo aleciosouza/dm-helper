@@ -2,20 +2,18 @@ import { useState } from "react";
 
 import styles from "./auth.module.scss";
 import { useLogin } from "@/domain/auth/authQuery";
+import { useNavigate } from "react-router";
 
-interface IAuthProps {
-    onSubmit: () => void;
-}
-
-const Auth: React.FC<IAuthProps> = ({ onSubmit }) => {
+const Auth: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const login = useLogin();
+    const navigate = useNavigate();
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         await login.mutateAsync({ email, password });
-        onSubmit();
+        await navigate("/home");
     }
 
     return (
