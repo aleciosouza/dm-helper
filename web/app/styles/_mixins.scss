@@ -1,0 +1,69 @@
+@use "sass:map";
+@use "variables" as v;
+
+/// Mobile-first media query from the $breakpoints scale.
+/// @example @include media("md") { ... }
+/// @param {string} $name "sm", "md", "lg".
+@mixin media($name) {
+    $width: map.get(v.$breakpoints, $name);
+
+    @if $width == null {
+        @error "Unknown breakpoint `#{$name}`. Available: #{map.keys(v.$breakpoints)}.";
+    }
+
+    @media (min-width: $width) {
+        @content;
+    }
+}
+
+/// Dark is the default theme, so dark styles are written unconditionally and
+/// this mixin holds the light-mode exceptions — same condition the palette in
+/// _themes.scss uses, so the two can never drift apart.
+/// @example .card { border-color: var(--color-border); @include when-light { ... } }
+@mixin when-light {
+    @media (prefers-color-scheme: light) {
+        :root:not([data-theme="dark"]) & {
+            @content;
+        }
+    }
+
+    :root[data-theme="light"] & {
+        @content;
+    }
+}
+
+@mixin focus-ring($offset: 2px) {
+    outline: 2px solid var(--color-focus);
+    outline-offset: $offset;
+}
+
+@mixin visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+@mixin truncate($lines: 1) {
+    @if $lines == 1 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    } @else {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: $lines;
+        overflow: hidden;
+    }
+}
+
+@mixin reduced-motion {
+    @media (prefers-reduced-motion: reduce) {
+        @content;
+    }
+}

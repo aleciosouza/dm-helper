@@ -1,0 +1,72 @@
+@use "abstracts" as *;
+
+.page {
+    display: grid;
+    place-items: center;
+    min-height: 100dvh;
+    padding: layout("gutter");
+}
+
+.card {
+    display: grid;
+    gap: space("lg");
+    width: 100%;
+    max-width: 24rem;
+    padding: space("lg");
+    border: 1px solid theme-color("border");
+    border-top: 2px solid theme-color("accent");
+    border-radius: radius("lg");
+    background-color: theme-color("surface");
+    box-shadow: shadow("lg");
+
+    @include media("sm") {
+        padding: space("xl");
+    }
+}
+
+.title {
+    font-size: font-size("2xl");
+    text-align: center;
+}
+
+.form {
+    display: grid;
+    gap: space("md");
+}
+
+.field {
+    display: grid;
+    gap: space("2xs");
+}
+
+.submit {
+    padding: space("xs") space("md");
+    border: 1px solid transparent;
+    border-radius: radius("full");
+    background-color: theme-color("accent");
+    color: theme-color("accent-contrast");
+    font-weight: weight("semibold");
+    transition: background-color duration("fast") easing("standard");
+
+    &:hover:not(:disabled) {
+        background-color: theme-color("accent-hover");
+    }
+
+    &:active:not(:disabled) {
+        background-color: theme-color("accent-active");
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.error {
+    margin: 0;
+    padding: space("xs") space("sm");
+    border-radius: radius("md");
+    background-color: theme-color("danger-soft");
+    color: theme-color("danger");
+    font-size: font-size("sm");
+}

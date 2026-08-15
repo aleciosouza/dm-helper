@@ -2,7 +2,7 @@ import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration }
 
 import type { Route } from "./+types/root";
 
-import "./app.css";
+import "./styles/main.scss";
 
 import { useState } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";

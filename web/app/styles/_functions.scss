@@ -1,0 +1,68 @@
+// Token accessors.
+// Functions used to validate tokens and silently return the CSS custom property,
+// this is the only way to access tokens
+
+@use "sass:map";
+@use "variables" as v;
+
+// Private helper function
+@function -token($map, $key, $prefix, $label) {
+    @if not map.has-key($map, $key) {
+        @error "Unknown #{$label} `#{$key}`. Available: #{map.keys($map)}.";
+    }
+
+    @return var(--#{$prefix}-#{$key});
+}
+
+@function space($key) {
+    @return -token(v.$spacing, $key, "space", "space");
+}
+
+@function font-size($key) {
+    @return -token(v.$font-sizes, $key, "text", "font size");
+}
+
+@function font-family($key) {
+    @return -token(v.$fonts, $key, "font", "font family");
+}
+
+@function leading($key) {
+    @return -token(v.$line-heights, $key, "leading", "line height");
+}
+
+@function weight($key) {
+    @return -token(v.$font-weights, $key, "weight", "font weight");
+}
+
+@function tracking($key) {
+    @return -token(v.$letter-spacings, $key, "tracking", "letter spacing");
+}
+
+@function radius($key) {
+    @return -token(v.$radii, $key, "radius", "radius");
+}
+
+// Named so it cannot shadow the native CSS `color()` function
+@function theme-color($key) {
+    @return -token(v.$palette-dark, $key, "color", "color");
+}
+
+@function shadow($key) {
+    @return -token(v.$shadows-dark, $key, "shadow", "shadow");
+}
+
+@function duration($key) {
+    @return -token(v.$durations, $key, "duration", "duration");
+}
+
+@function easing($key) {
+    @return -token(v.$easings, $key, "ease", "easing");
+}
+
+@function z($key) {
+    @return -token(v.$z-index, $key, "z", "z-index");
+}
+
+@function layout($key) {
+    @return -token(v.$layout, $key, "layout", "layout size");
+}

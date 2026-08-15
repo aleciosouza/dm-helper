@@ -5,8 +5,10 @@ import { requireGuest, requireGuestClient } from "../domain/auth/authMiddleware"
 import { useLogin } from "../domain/auth/authQuery";
 import type { Route } from "./+types/auth";
 
+import styles from "./auth.module.scss";
+
 export function meta(_: Route.MetaArgs) {
-    return [{ title: "Entrar · DM Helper" }];
+    return [{ title: "Login · DM Helper" }];
 }
 
 export const middleware: Route.MiddlewareFunction[] = [requireGuest];
@@ -26,35 +28,46 @@ export default function Auth() {
     }
 
     return (
-        <main>
-            <h1>Entrar</h1>
-            <form onSubmit={(event) => void handleSubmit(event)}>
-                <label htmlFor="email">E-mail</label>
-                <input
-                    id="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                />
+        <main className={styles.page}>
+            <div className={styles.card}>
+                <h1 className={styles.title}>Login</h1>
 
-                <label htmlFor="password">Senha</label>
-                <input
-                    id="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                />
+                {login.isError && (
+                    <p className={styles.error} role="alert">
+                        Invalid email or password.
+                    </p>
+                )}
 
-                <button type="submit" disabled={login.isPending}>
-                    {login.isPending ? "Entrando..." : "Entrar"}
-                </button>
+                <form className={styles.form} onSubmit={(event) => void handleSubmit(event)}>
+                    <div className={styles.field}>
+                        <label htmlFor="email">E-mail</label>
+                        <input
+                            id="email"
+                            type="email"
+                            autoComplete="email"
+                            required
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                        />
+                    </div>
 
-                {login.isError && <p role="alert">E-mail ou senha inválidos.</p>}
-            </form>
+                    <div className={styles.field}>
+                        <label htmlFor="password">Password</label>
+                        <input
+                            id="password"
+                            type="password"
+                            autoComplete="current-password"
+                            required
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
+                        />
+                    </div>
+
+                    <button className={styles.submit} type="submit" disabled={login.isPending}>
+                        {login.isPending ? "Logging in..." : "Login"}
+                    </button>
+                </form>
+            </div>
         </main>
     );
 }

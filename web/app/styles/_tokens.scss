@@ -1,0 +1,53 @@
+// ---------------------------------------------------------------------------
+// Theme-independent custom properties, generated from the maps in
+// _variables.scss. Colors and shadows are declared in _themes.scss instead,
+// because those are the only tokens that change between light and dark.
+// ---------------------------------------------------------------------------
+
+@use "variables" as v;
+
+:root {
+    @each $key, $value in v.$spacing {
+        --space-#{$key}: #{$value};
+    }
+
+    @each $key, $value in v.$fonts {
+        --font-#{$key}: #{$value};
+    }
+
+    @each $key, $value in v.$font-sizes {
+        --text-#{$key}: #{$value};
+    }
+
+    @each $key, $value in v.$line-heights {
+        --leading-#{$key}: #{$value};
+    }
+
+    @each $key, $value in v.$font-weights {
+        --weight-#{$key}: #{$value};
+    }
+
+    @each $key, $value in v.$letter-spacings {
+        --tracking-#{$key}: #{$value};
+    }
+
+    @each $key, $value in v.$radii {
+        --radius-#{$key}: #{$value};
+    }
+
+    @each $key, $value in v.$durations {
+        --duration-#{$key}: #{$value};
+    }
+
+    @each $key, $value in v.$easings {
+        --ease-#{$key}: #{$value};
+    }
+
+    @each $key, $value in v.$z-index {
+        --z-#{$key}: #{$value};
+    }
+
+    @each $key, $value in v.$layout {
+        --layout-#{$key}: #{$value};
+    }
+}

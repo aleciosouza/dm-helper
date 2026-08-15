@@ -1,0 +1,175 @@
+@use "abstracts" as *;
+
+:where(body) {
+    background-color: theme-color("bg");
+    color: theme-color("text");
+    font-family: font-family("sans");
+    font-size: font-size("md");
+    line-height: leading("normal");
+}
+
+::selection {
+    background-color: theme-color("accent");
+    color: theme-color("accent-contrast");
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+    font-family: font-family("serif");
+    font-weight: weight("semibold");
+    letter-spacing: tracking("tight");
+}
+
+:where(h1) {
+    font-size: font-size("3xl");
+}
+
+:where(h2) {
+    font-size: font-size("2xl");
+}
+
+:where(h3) {
+    font-size: font-size("xl");
+}
+
+:where(h4, h5, h6) {
+    font-size: font-size("lg");
+}
+
+:where(small) {
+    font-size: font-size("sm");
+}
+
+:where(a) {
+    color: theme-color("accent");
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    transition: color duration("fast") easing("standard");
+}
+
+:where(a):hover {
+    color: theme-color("accent-hover");
+    text-decoration: underline;
+}
+
+:where(strong, b) {
+    font-weight: weight("semibold");
+}
+
+:where(hr) {
+    border: 0;
+    border-top: 1px solid theme-color("border");
+}
+
+:where(blockquote) {
+    padding-inline-start: space("md");
+    border-inline-start: 2px solid theme-color("accent");
+    color: theme-color("text-muted");
+    font-family: font-family("serif");
+    font-style: italic;
+}
+
+:where(code, kbd, samp, pre) {
+    font-family: font-family("mono");
+    font-size: 0.9em;
+}
+
+:where(code) {
+    padding: space("3xs") space("2xs");
+    border-radius: radius("sm");
+    background-color: theme-color("surface-sunken");
+    color: theme-color("text");
+}
+
+:where(pre) {
+    padding: space("md");
+    overflow-x: auto;
+    border: 1px solid theme-color("border");
+    border-radius: radius("md");
+    background-color: theme-color("surface-sunken");
+}
+
+:where(pre) :where(code) {
+    padding: 0;
+    background: none;
+}
+
+// -- Forms ------------------------------------------------------------------
+
+:where(input, textarea, select) {
+    padding: space("xs") space("sm");
+    border: 1px solid theme-color("border");
+    border-radius: radius("md");
+    background-color: theme-color("surface-sunken");
+    color: theme-color("text");
+    transition:
+        border-color duration("fast") easing("standard"),
+        box-shadow duration("fast") easing("standard");
+}
+
+:where(input, textarea, select):hover:not(:disabled) {
+    border-color: theme-color("border-strong");
+}
+
+:where(input, textarea, select):focus-visible {
+    border-color: theme-color("accent");
+    outline: none;
+    box-shadow: 0 0 0 3px theme-color("accent-soft");
+}
+
+:where(input, textarea, select):disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+::placeholder {
+    color: theme-color("text-subtle");
+}
+
+:where(input[type="checkbox"], input[type="radio"]) {
+    accent-color: theme-color("accent");
+}
+
+:where(label) {
+    color: theme-color("text-muted");
+    font-size: font-size("sm");
+    font-weight: weight("medium");
+}
+
+:where(fieldset) {
+    border: 1px solid theme-color("border");
+    border-radius: radius("md");
+}
+
+:where(legend) {
+    padding-inline: space("xs");
+    color: theme-color("text-muted");
+    font-size: font-size("sm");
+}
+
+// -- Tables -----------------------------------------------------------------
+
+:where(th, td) {
+    padding: space("xs") space("sm");
+    border-bottom: 1px solid theme-color("border");
+    text-align: start;
+}
+
+:where(th) {
+    color: theme-color("text-muted");
+    font-size: font-size("sm");
+    font-weight: weight("semibold");
+    letter-spacing: tracking("wide");
+    text-transform: uppercase;
+}
+
+// -- Focus ------------------------------------------------------------------
+
+:where(:focus-visible) {
+    @include focus-ring;
+}
+
+// -- Utilities --------------------------------------------------------------
+
+.visually-hidden {
+    @include visually-hidden;
+}

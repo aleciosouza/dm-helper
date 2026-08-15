@@ -1,0 +1,196 @@
+// Design tokens single source of truth.
+
+// Layout
+$breakpoints: (
+    "sm": 40rem,
+    "md": 48rem,
+    "lg": 64rem,
+    "xl": 80rem,
+);
+
+$layout: (
+    "narrow": 34rem,
+    "content": 56rem,
+    "wide": 72rem,
+    "gutter": clamp(1rem, 4vw, 2rem),
+);
+
+// Space
+$spacing: (
+    "none": 0,
+    "3xs": 0.125rem,
+    "2xs": 0.25rem,
+    "xs": 0.5rem,
+    "sm": 0.75rem,
+    "md": 1rem,
+    "lg": 1.5rem,
+    "xl": 2rem,
+    "2xl": 3rem,
+    "3xl": 4rem,
+    "4xl": 6rem,
+);
+
+// Typography
+$fonts: (
+    "serif": (
+        "Iowan Old Style",
+        Georgia,
+        "Times New Roman",
+        serif,
+    ),
+    "sans": (
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        Roboto,
+        sans-serif,
+    ),
+    "mono": (
+        ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        Consolas,
+        monospace,
+    ),
+);
+
+$font-sizes: (
+    "xs": 0.75rem,
+    "sm": 0.875rem,
+    "md": 1rem,
+    "lg": 1.125rem,
+    "xl": 1.375rem,
+    // For WCAG 1.4.4
+    "2xl": clamp(1.625rem, 1.35rem + 1.4vw, 2.125rem),
+    "3xl": clamp(2rem, 1.55rem + 2.2vw, 2.875rem),
+);
+
+$line-heights: (
+    "tight": 1.1,
+    "snug": 1.3,
+    "normal": 1.5,
+    "loose": 1.7,
+);
+
+$font-weights: (
+    "regular": 400,
+    "medium": 500,
+    "semibold": 600,
+    "bold": 700,
+    "black": 900,
+);
+
+$letter-spacings: (
+    "tight": -0.015em,
+    "normal": 0,
+    "wide": 0.04em,
+);
+
+// Shape
+$radii: (
+    "none": 0,
+    "sm": 0.25rem,
+    "md": 0.5rem,
+    "lg": 0.75rem,
+    "xl": 1rem,
+    "full": 9999px,
+);
+
+// Motion
+$durations: (
+    "fast": 120ms,
+    "base": 200ms,
+    "slow": 320ms,
+);
+
+$easings: (
+    "standard": cubic-bezier(0.2, 0, 0.2, 1),
+    "out": cubic-bezier(0, 0, 0.2, 1),
+    "in": cubic-bezier(0.4, 0, 1, 1),
+);
+
+// Stacking
+$z-index: (
+    "base": 0,
+    "dropdown": 100,
+    "sticky": 200,
+    "overlay": 300,
+    "modal": 400,
+    "toast": 500,
+    "tooltip": 600,
+);
+
+// Palettes
+$palette-dark: (
+    "bg": #14120f,
+    "surface": #1c1915,
+    "surface-raised": #262118,
+    "surface-sunken": #100e0c,
+    "border": #352f26,
+    "border-strong": #4a4235,
+    "overlay": rgba(#080604, 0.72),
+    "text": #ece4d4,
+    "text-muted": #a99d89,
+    "text-subtle": #7c7263,
+    "text-inverse": #14120f,
+    "accent": #d99a2b,
+    "accent-hover": #e9ad45,
+    "accent-active": #c2851d,
+    "accent-soft": rgba(#d99a2b, 0.14),
+    "accent-contrast": #14120f,
+    "focus": #e9ad45,
+    "success": #7fae55,
+    "success-soft": rgba(#7fae55, 0.14),
+    "danger": #d9635b,
+    "danger-soft": rgba(#d9635b, 0.14),
+    "warning": #e0b155,
+    "warning-soft": rgba(#e0b155, 0.14),
+    "info": #7fa8c9,
+    "info-soft": rgba(#7fa8c9, 0.14),
+    "crit": #e2c25e,
+    "fumble": #cf5a4f,
+);
+
+$palette-light: (
+    "bg": #f4eee1,
+    "surface": #fdf9f0,
+    "surface-raised": #ffffff,
+    "surface-sunken": #eae2d1,
+    "border": #dcd1b9,
+    "border-strong": #bfae8f,
+    "overlay": rgba(#241f18, 0.45),
+    "text": #241f18,
+    "text-muted": #5c5344,
+    "text-subtle": #837868,
+    "text-inverse": #fdf9f0,
+
+    "accent": #96650f,
+    "accent-hover": #7c5309,
+    "accent-active": #634205,
+    "accent-soft": rgba(#96650f, 0.12),
+    "accent-contrast": #fff8e8,
+
+    "focus": #96650f,
+    "success": #4a6b30,
+    "success-soft": rgba(#4a6b30, 0.12),
+    "danger": #8c2f2f,
+    "danger-soft": rgba(#8c2f2f, 0.12),
+    "warning": #8a6316,
+    "warning-soft": rgba(#8a6316, 0.12),
+    "info": #2f5670,
+    "info-soft": rgba(#2f5670, 0.12),
+    "crit": #7c5309,
+    "fumble": #8c2f2f,
+);
+
+$shadows-dark: (
+    "sm": 0 1px 2px rgba(#000, 0.5),
+    "md": 0 4px 12px rgba(#000, 0.55),
+    "lg": 0 16px 40px rgba(#000, 0.6),
+);
+
+$shadows-light: (
+    "sm": 0 1px 2px rgba(#241f18, 0.08),
+    "md": 0 4px 12px rgba(#241f18, 0.1),
+    "lg": 0 16px 40px rgba(#241f18, 0.14),
+);
