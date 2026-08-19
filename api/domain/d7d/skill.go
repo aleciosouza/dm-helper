@@ -1,6 +1,6 @@
 package d7d
 
-type Skill uint8
+type Skill uint16
 
 const (
 	Acrobatics Skill = iota + 1

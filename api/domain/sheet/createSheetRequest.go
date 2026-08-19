@@ -64,7 +64,5 @@ func CreateSheetHandler(ctx *gin.Context) {
 		return
 	}
 
-	handler.SendSuccess(ctx, "create_sheet", gin.H{
-		"sheet_id": sheet.ID,
-	})
+	handler.SendSuccess(ctx, "create_sheet", sheet.ToResponse())
 }

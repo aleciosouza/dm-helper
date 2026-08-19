@@ -73,11 +73,11 @@ func UpdateSheetHandler(ctx *gin.Context) {
 			return err
 		}
 
-		if len(req.Skills) > 0 && len(sheet.Skills) > 0 {
-			if err := tx.Where("sheet_id = ?", sheet.ID).Delete(&schemas.SheetSkill{}).Error; err != nil {
-				return err
-			}
+		if err := tx.Where("sheet_id = ?", sheet.ID).Delete(&schemas.SheetSkill{}).Error; err != nil {
+			return err
+		}
 
+		if len(sheet.Skills) > 0 {
 			for i := range sheet.Skills {
 				sheet.Skills[i].SheetID = sheet.ID
 			}
@@ -87,14 +87,15 @@ func UpdateSheetHandler(ctx *gin.Context) {
 			}
 		}
 
-		if len(req.Attacks) > 0 && len(sheet.Attacks) > 0 {
-			if err := tx.Where("sheet_id = ?", sheet.ID).Delete(&schemas.SheetAttack{}).Error; err != nil {
-				return err
-			}
+		if err := tx.Where("sheet_id = ?", sheet.ID).Delete(&schemas.SheetAttack{}).Error; err != nil {
+			return err
+		}
 
+		if len(sheet.Attacks) > 0 {
 			for i := range sheet.Attacks {
 				sheet.Attacks[i].SheetID = sheet.ID
 			}
+
 			if err := tx.Create(&sheet.Attacks).Error; err != nil {
 				return err
 			}
