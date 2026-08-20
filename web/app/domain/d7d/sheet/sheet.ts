@@ -1,19 +1,20 @@
-import type { TDice, TSkill } from "./types";
+import type { ESkill, TDice } from "../types";
 
 export interface ISheetAttack {
     name: string;
-    attackDice: TDice;
-    attackDiceAmount: number;
-    damageType: string;
+    attack_dice: TDice;
+    attack_dice_amount: number;
+    damage_type: string;
 }
 
 export interface ISheet {
+    id: number
     name: string
     class: string
     race: string
     background: string
     alignment: string
-    personalityTraits: string
+    personality_traits: string
     ideals: string
     bonds: string
     flaws: string
@@ -34,7 +35,7 @@ export interface ISheet {
     save_wis: boolean
     save_cha: boolean
 
-    skills: TSkill[]
+    skills: ESkill[]
 
     armor_class: number
     speed: string
@@ -47,13 +48,13 @@ export interface ISheet {
     hit_dice_current: number
     hit_dice_total: number
 
-    deathSavesSuccess: number
-    deathSavesFailure: number
+    death_saves_success: number
+    death_saves_failure: number
 
     attacks: ISheetAttack[]
 
     languages: string
-    otherProficiencies: string
+    other_proficiencies: string
 
     age: number
     height: string

@@ -1,29 +1,34 @@
 import { useUser } from '@/domain/auth/authQuery';
-import { clearToken } from '@/domain/auth/token';
-import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 
-const Home = () => {
+import styles from './home.module.scss';
+import SheetsList from './SheetList';
+
+const ProfileBar: React.FC = () => {
     const { data: user, isPending } = useUser();
-    const queryClient = useQueryClient();
     const navigate = useNavigate();
 
-    async function handleLogout() {
-        clearToken();
-        queryClient.clear();
+    const handleLogout = async () => {
         await navigate("/auth");
     }
 
     return (
-        <main>
-            <h1>DM Helper</h1>
+        <div className={styles.header}>
+            <span>{isPending ? "Carregando..." : `Olá, ${user?.name || user?.email}`}</span>
 
-            <p>{isPending ? "Carregando..." : `Olá, ${user?.name || user?.email}`}</p>
-
-            <button type="button" onClick={() => void handleLogout()}>
-                Sair
+            <button type="button" className={styles.header__logout} onClick={() => void handleLogout()}>
+                Logout
             </button>
-        </main>
+        </div>
+    );
+}
+
+const Home: React.FC = () => {
+    return (
+        <>
+            <ProfileBar />
+            <SheetsList />
+        </>
     );
 
 }

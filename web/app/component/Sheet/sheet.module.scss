@@ -1,0 +1,221 @@
+@use "abstracts" as *;
+
+.page {
+    display: grid;
+    gap: space("lg");
+    width: 100%;
+    max-width: layout("narrow");
+    margin-inline: auto;
+    padding: layout("gutter");
+    // Room for the action bar, which is pinned while the thumb is near the bottom.
+    padding-block-end: space("4xl");
+
+    @include media("sm") {
+        max-width: layout("content");
+        padding-block-end: layout("gutter");
+    }
+}
+
+.title {
+    font-size: font-size("2xl");
+}
+
+.notice {
+    padding: layout("gutter");
+    color: theme-color("text-muted");
+    text-align: center;
+}
+
+// -- Stepper ----------------------------------------------------------------
+
+.stepper {
+    display: grid;
+    gap: space("xs");
+}
+
+.stepperCount {
+    margin: 0;
+    color: theme-color("text-muted");
+    font-size: font-size("sm");
+    font-weight: weight("medium");
+}
+
+.progress {
+    overflow: hidden;
+    block-size: space("2xs");
+    border-radius: radius("full");
+    background-color: theme-color("surface-sunken");
+}
+
+.progressBar {
+    display: block;
+    block-size: 100%;
+    border-radius: radius("full");
+    background-color: theme-color("accent");
+    transition: inline-size duration("base") easing("standard");
+
+    @include reduced-motion {
+        transition: none;
+    }
+}
+
+// -- Form -------------------------------------------------------------------
+
+.form {
+    display: grid;
+    gap: space("lg");
+}
+
+.step {
+    display: grid;
+    gap: space("md");
+}
+
+.stepTitle {
+    margin: 0;
+    font-size: font-size("xl");
+}
+
+.hint {
+    margin: 0;
+    color: theme-color("text-muted");
+    font-size: font-size("sm");
+}
+
+.field {
+    display: grid;
+    gap: space("2xs");
+}
+
+.toggle {
+    display: flex;
+    align-items: center;
+    gap: space("xs");
+    // Comfortable tap target on a phone.
+    min-block-size: space("xl");
+    color: theme-color("text");
+    cursor: pointer;
+}
+
+// -- Abilities & skills -----------------------------------------------------
+
+.abilities,
+.skills {
+    display: grid;
+    gap: space("md");
+    padding: space("md");
+}
+
+.abilities {
+    @include media("sm") {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.ability {
+    display: grid;
+    gap: space("2xs");
+}
+
+.skills {
+    gap: space("2xs");
+
+    @include media("sm") {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+// -- Attacks ----------------------------------------------------------------
+
+.attack {
+    display: grid;
+    gap: space("sm");
+    padding: space("md");
+    background-color: theme-color("surface");
+
+    @include media("sm") {
+        grid-template-columns: repeat(2, 1fr);
+
+        > .remove {
+            grid-column: 1 / -1;
+            justify-self: start;
+        }
+    }
+}
+
+// -- Actions ----------------------------------------------------------------
+
+.actions {
+    position: sticky;
+    inset-block-end: 0;
+    z-index: z("sticky");
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: space("sm");
+    padding-block: space("sm");
+    border-block-start: 1px solid theme-color("border");
+    background-color: theme-color("bg");
+}
+
+%button {
+    padding: space("xs") space("md");
+    border: 1px solid transparent;
+    border-radius: radius("full");
+    font-weight: weight("semibold");
+    transition: background-color duration("fast") easing("standard");
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.submit {
+    @extend %button;
+
+    background-color: theme-color("accent");
+    color: theme-color("accent-contrast");
+
+    &:hover:not(:disabled) {
+        background-color: theme-color("accent-hover");
+    }
+
+    &:active:not(:disabled) {
+        background-color: theme-color("accent-active");
+    }
+}
+
+.secondary {
+    @extend %button;
+
+    border-color: theme-color("border-strong");
+    background-color: transparent;
+    color: theme-color("text");
+
+    &:hover:not(:disabled) {
+        background-color: theme-color("surface-raised");
+    }
+}
+
+.remove {
+    justify-self: start;
+    padding: 0;
+    border: none;
+    background: none;
+    color: theme-color("danger");
+    font-size: font-size("sm");
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.error {
+    margin: 0;
+    padding: space("xs") space("sm");
+    border-radius: radius("md");
+    background-color: theme-color("danger-soft");
+    color: theme-color("danger");
+    font-size: font-size("sm");
+}
